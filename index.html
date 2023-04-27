@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="800"></canvas>
+    <script>
+    var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+var isDrawing = false;
+var lastX, lastY;
+var brushSize = 10;
+
+canvas.addEventListener('touchstart', function(event) {
+  isDrawing = true;
+  lastX = event.touches[0].clientX - canvas.offsetLeft;
+  lastY = event.touches[0].clientY - canvas.offsetTop;
+});
+
+canvas.addEventListener('touchmove', function(event) {
+  if (isDrawing) {
+    var currentX = event.touches[0].clientX - canvas.offsetLeft;
+    var currentY = event.touches[0].clientY - canvas.offsetTop;
+    
+    ctx.beginPath();
+    ctx.arc(currentX, currentY, brushSize, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    lastX = currentX;
+    lastY = currentY;
+  }
+});
+
+canvas.addEventListener('touchend', function(event) {
+  isDrawing = false;
+});
+</script>
+</body>
+</html>
